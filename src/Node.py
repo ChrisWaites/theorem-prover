@@ -35,3 +35,35 @@ class Node(object):
 
     def __cmp__(self, other):
         return cmp(len(self.__str__()), len(other.__str__()))
+
+# Assumes well-formed expression
+def parse(exp):
+    if exp[0] == "~":
+        return Node("~", parse(exp[2 : -1]))
+    else:
+        foundParend = False
+        parendCount = 0
+        operator = ""
+        operatorIndex = -1
+        for i in range(0, len(exp)):
+            if exp[i] == "(":
+                foundParend = True
+                parendCount += 1
+            elif exp[i] == ")":
+                parendCount -= 1
+            elif parendCount == 0:
+                operator += exp[i]
+                if operatorIndex == -1:
+                    operatorIndex = i
+        if not foundParend:
+            return Node(exp)
+        else:
+            return Node(operator, parse(exp[1 : operatorIndex - 1]), parse(exp[operatorIndex + len(operator) + 1 : -1]))
+
+def wellFormed(node):
+    if node.data == "~":
+        return len(node.children) == 1 and wellFormed(node.children[0])
+    elif node.data in ["^", "v", "->", "<->"]:
+        return len(node.children) == 2 and wellFormed(node.children[0]) and wellFormed(node.children[1])
+    else:
+        return len(node.children) == 0
