@@ -36,7 +36,22 @@ class Node(object):
     def __cmp__(self, other):
         return cmp(len(self.__str__()), len(other.__str__()))
 
-# Assumes well-formed expression
+    # Applies a function to every node in the tree exactly once.
+    def apply(self, f):
+        ret = set()
+        applied = f(self)
+        if not applied == None:
+            ret.add(applied)
+        for i in range(len(self.children)):
+            newIthChildren = self.children[i].apply(f)
+            for newChild in newIthChildren:
+                newChildren = [child for child in self.children]
+                newChildren[i] = newChild
+                newNode = Node(self.data, *newChildren)
+                ret.add(newNode)
+        return ret
+
+# Returns a node based upon a string expression - it assumes that the expression is well-formed.
 def parse(exp):
     if exp[0] == "~":
         return Node("~", parse(exp[2 : -1]))
@@ -60,6 +75,7 @@ def parse(exp):
         else:
             return Node(operator, parse(exp[1 : operatorIndex - 1]), parse(exp[operatorIndex + len(operator) + 1 : -1]))
 
+# Verifies whether a node is well formed.
 def wellFormed(node):
     if node.data == "~":
         return len(node.children) == 1 and wellFormed(node.children[0])
@@ -67,3 +83,6 @@ def wellFormed(node):
         return len(node.children) == 2 and wellFormed(node.children[0]) and wellFormed(node.children[1])
     else:
         return len(node.children) == 0
+
+
+a = parse("p")
