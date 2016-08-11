@@ -1,4 +1,4 @@
-from Node import *
+from Node import Node
 
 # T => ~(F)
 # F => ~(T)
