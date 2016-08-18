@@ -60,3 +60,20 @@ def resolution(nodeA, nodeB):
     if nodeA.data == "v" and nodeB.data == "v":
         if nodeB.children[0].data == "~" and nodeA.children[0] == nodeB.children[0].children[0]:
             return Node("v", nodeA.children[1], nodeB.children[1])
+
+# ((p)->(q))^((r)->(s))
+# (p)v(r)
+# =>
+# (q)v(s)
+def constructiveDilemma(nodeA, nodeB):
+    if nodeA.data == "^":
+        if nodeA.children[0].data == "->" and nodeA.children[1].data == "->":
+            if nodeA.children[0].children[0] == nodeB.children[0] and nodeA.children[1].children[0] == nodeB.children[1]:
+                return Node("v", nodeA.children[0].children[1], nodeA.children[1].children[1])
+
+# (p)->(q)
+# =>
+# (p)->((p)^(q))
+def absorption(node):
+    if node.data == "->":
+        return Node("->", node.children[0], Node("^", node.children[0], node.children[1]))

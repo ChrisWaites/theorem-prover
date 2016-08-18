@@ -76,12 +76,3 @@ def parse(exp):
             return Node(exp)
         else:
             return Node(operator, parse(exp[1 : operatorIndex - 1]), parse(exp[operatorIndex + len(operator) + 1 : -1]))
-
-# Verifies whether a node is well formed.
-def wellFormed(node):
-    if node.data == "~":
-        return len(node.children) == 1 and wellFormed(node.children[0])
-    elif node.data in ["^", "v", "->", "<->"]:
-        return len(node.children) == 2 and wellFormed(node.children[0]) and wellFormed(node.children[1])
-    else:
-        return len(node.children) == 0
