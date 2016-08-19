@@ -37,3 +37,10 @@ def subtraction(node):
     if node.data == "=":
         if node.children[0].data == "S" and node.children[1].data == "S":
             return Node("=", node.children[0].children[0], node.children[1].children[0])
+
+# (x)=(y) <=> ~(~((x)=(y)))
+# Ax(p(x)) <=> ~(~(Ax(p(x))))
+# Ex(p(x)) <=> ~(~(Ex(p(x))))
+def doubleNegationIntroduction(node):
+    if node.data == "=" or node.data[0] == "A" or node.data[0] == "E":
+        return Node("~", Node("~", node))

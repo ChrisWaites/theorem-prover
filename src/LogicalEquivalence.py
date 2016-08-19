@@ -38,7 +38,8 @@ def idempotent(node):
 
 # p <=> ~(~(p))
 def doubleNegationIntroduction(node):
-    return Node("~", Node("~", node))
+    if node.data in ["~", "^", "v", "->", "<->"]:
+        return Node("~", Node("~", node))
 
 # p <=> ~(~(p))
 def doubleNegationElimination(node):
