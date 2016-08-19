@@ -14,9 +14,9 @@ def quantifierInterchange(node):
 def quantifierNegation(node):
     if node.data == "~":
         if node.children[0].data[0] == "A":
-            return Node("E" + node.children.data[1:], Node("~", node.children[0].children[0]))
+            return Node("E" + node.children[0].data[1:], Node("~", node.children[0].children[0]))
         if node.children[0].data[0] == "E":
-            return Node("A" + node.children.data[1:], Node("~", node.children[0].children[0]))
+            return Node("A" + node.children[0].data[1:], Node("~", node.children[0].children[0]))
     if node.data[0] == "A" and node.children[0].data == "~":
         return Node("~", Node("E" + node.data[1:], node.children[0].children[0]))
     if node.data[0] == "E" and node.children[0].data == "~":

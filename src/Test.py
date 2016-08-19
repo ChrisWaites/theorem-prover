@@ -9,13 +9,20 @@ equivalencies = [truth, identity, domination, idempotent, doubleNegationIntroduc
                  demorgans, absorption, negation, materialImplication, contraposition,
                  biconditional, biconditionalElimination]
 inferences = [modusPonens, modusTollens, hypotheticalSyllogism, disjunctiveSyllogism,
-              conjunction, resolution, constructiveDilemma, absorption]
+              conjunction, resolution, constructiveDilemma]
 ntEquivalencies = [quantifierInterchange, quantifierNegation, symmetryOfEquality, addition, subtraction, doubleNegationIntroduction]
 
-theorems = set([parse("(p)->(q)"), parse("(q)->(r)"), parse("(r)->(p)")])
+# Peano's Axioms
+theorems = set([parse("Aa(~((S(a))=(0)))"),
+                parse("Aa(((a)+(0))=(a))"),
+                parse("Aa(Ab(((a)+(S(b)))=(S((a)+(b)))))"),
+                parse("Aa(((a)*(0))=(0))"),
+                parse("Aa(Ab(((a)*(S(b)))=(((a)*(b))+(a))))")])
+# Unused Theorems
 currTheorems = set(theorems)
 
-for i in range(3):
+for i in range(2):
+    # Derivations
     newTheorems = set()
     for theorem in currTheorems:
         for equivalence in equivalencies:
@@ -30,6 +37,9 @@ for i in range(3):
         simplified = simplification(theorem)
         if simplified != None:
             newTheorems.add(simplified)
+        absorbed = absorption(theorem)
+        if absorbed != None:
+            newTheorems.add(absorbed)
     theorems.update(newTheorems)
     currTheorems = newTheorems
 
