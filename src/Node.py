@@ -10,11 +10,6 @@ class Node(object):
             return self.data + "(" + self.children[0].__str__() + ")"
         elif len(self.children) == 2:
             return "(" + self.children[0].__str__() + ")" + self.data + "(" + self.children[1].__str__() + ")"
-        else:
-            ret = self.data + "("
-            for child in self.children:
-                ret += child.__str__() + ","
-            return ret[:-1] + ")"
 
     def __repr__(self):
         return self.__str__()
@@ -55,24 +50,18 @@ class Node(object):
 # Returns a node based upon a string expression.
 # Right now, it assumes that the expression is well-formed.
 def parse(exp):
-    if exp[0] == "~":
-        return Node("~", parse(exp[2 : -1]))
-    else:
-        foundParend = False
-        parendCount = 0
-        operator = ""
-        operatorIndex = -1
-        for i in range(0, len(exp)):
-            if exp[i] == "(":
-                foundParend = True
-                parendCount += 1
-            elif exp[i] == ")":
-                parendCount -= 1
-            elif parendCount == 0:
-                operator += exp[i]
-                if operatorIndex == -1:
-                    operatorIndex = i
-        if not foundParend:
-            return Node(exp)
-        else:
-            return Node(operator, parse(exp[1 : operatorIndex - 1]), parse(exp[operatorIndex + len(operator) + 1 : -1]))
+    currData = ""
+    openParendCount = 0
+    children = []
+    for i in range(len(exp)):
+        if exp[i] == "(":
+            if openParendCount == 0:
+                startIndex = i
+            openParendCount += 1
+        elif exp[i] == ")":
+            openParendCount -= 1
+            if openParendCount == 0:
+                children.append(parse(exp[startIndex + 1 : i]))
+        elif openParendCount == 0:
+            currData += exp[i]
+    return Node(currData, *children)

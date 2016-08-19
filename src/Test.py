@@ -1,4 +1,5 @@
 from LogicalEquivalence import *
+from NumberTheory import *
 from Inference import *
 from Node import *
 from Queue import PriorityQueue
@@ -9,6 +10,7 @@ equivalencies = [truth, identity, domination, idempotent, doubleNegationIntroduc
                  biconditional, biconditionalElimination]
 inferences = [modusPonens, modusTollens, hypotheticalSyllogism, disjunctiveSyllogism,
               conjunction, resolution, constructiveDilemma, absorption]
+ntEquivalencies = [quantifierInterchange, quantifierNegation, symmetryOfEquality, addition, subtraction, doubleNegationIntroduction]
 
 theorems = set([parse("(p)->(q)"), parse("(q)->(r)"), parse("(r)->(p)")])
 currTheorems = set(theorems)
@@ -17,6 +19,8 @@ for i in range(3):
     newTheorems = set()
     for theorem in currTheorems:
         for equivalence in equivalencies:
+            newTheorems.update(theorem.apply(equivalence))
+        for equivalence in ntEquivalencies:
             newTheorems.update(theorem.apply(equivalence))
         for otherTheorem in currTheorems:
             for inference in inferences:
