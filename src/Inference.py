@@ -1,79 +1,81 @@
-from Node import Node
+from Expr import Expr
 
-# p
-# (p)->(q)
-# =>
-# q
-def modusPonens(nodeA, nodeB):
-    if nodeB.data == "->" and nodeA == nodeB.children[0]:
-        return nodeB.children[1]
+def conjunction(exprA, exprB):
+    """ Note that conjunction is necessarily a meta-operation.
+    p
+    q
+    =>
+    (p)&(q)
+    """
+    return expr.args[0] & expr.args[1]
 
-# ~(q)
-# (p)->(q)
-# =>
-# ~(p)
-def modusTollens(nodeA, nodeB):
-    if nodeA.data == "~" and nodeB.data == "->" and nodeA.children[0] == nodeB.children[1]:
-        return Node("~", nodeB.children[0])
+def modusPonens(expr):
+    """
+    (p)&((p)->(q)) <=> q
+    """
+    if expr.op == "&":
+        if expr.args[1].op == "->" and expr.args[0] == expr.args[1].args[0]:
+            return expr.args[1].args[1]
 
-# (p)->(q)
-# (q)->(r)
-# =>
-# (p)->(r)
-def hypotheticalSyllogism(nodeA, nodeB):
-    if nodeA.data == "->" and nodeB.data == "->" and nodeA.children[1] == nodeB.children[0]:
-        return Node("->", nodeA.children[0], nodeB.children[1])
+def modusTollens(expr):
+    """
+    (~(q))&((p)->(q)) <=> ~(p)
+    """
+    if expr.op == "&":
+        if expr.args[0].op == "~" and expr.args[1].op == "->" and expr.args[0].args[0] == expr.args[1].args[1]:
+            return ~expr.args[1].args[0]
 
-# (p)v(q)
-# ~(p)
-# =>
-# q
-def disjunctiveSyllogism(nodeA, nodeB):
-    if nodeA.data == "v" and nodeB.data == "~" and nodeA.children[0] == nodeB.children[0]:
-        return nodeA.children[1]
+def hypotheticalSyllogism(expr):
+    """
+    ((p)->(q))&((q)->(r)) <=> (p)->(r)
+    """
+    if expr.op == "&":
+        if expr.args[0].op == "->" and expr.args[1].op == "->" and expr.args[0].args[1] == expr.args[1].args[0]:
+            return expr.args[0].args[0] >> expr.args[1].args[1]
 
-# p
-# =>
-# (p)v(q)
-# def addition(node):
-#     return Node("v", node, Node("q"))
+def disjunctiveSyllogism(expr):
+    """
+    ((p)|(q))&(~(p)) <=> q
+    """
+    if expr.op == "&":
+        if expr.args[0].op == "|" and expr.args[1].op == "~" and expr.args[0].args[0] == expr.args[1].args[0]:
+            return expr.args[0].args[1]
 
-# (p)^(q)
-# =>
-# p
-def simplification(node):
-    if node.data == "^":
-        return node.children[0]
+# def addition(expr):
+#     """
+#     p <=> (p)|(q)
+#     """
+#     return expr | Expr("q")
 
-# p
-# q
-# =>
-# (p)^(q)
-def conjunction(nodeA, nodeB):
-    return Node("^", nodeA, nodeB)
+def simplification(expr):
+    """
+    (p)&(q) <=> p
+    """
+    if expr.op == "&":
+        return expr.args[0]
 
-# (p)v(q)
-# (~(p))v(r)
-# =>
-# (q)v(r)
-def resolution(nodeA, nodeB):
-    if nodeA.data == "v" and nodeB.data == "v":
-        if nodeB.children[0].data == "~" and nodeA.children[0] == nodeB.children[0].children[0]:
-            return Node("v", nodeA.children[1], nodeB.children[1])
+def resolution(expr):
+    """
+    ((p)|(q))&((~(p))|(r)) <=> (q)|(r)
+    """
+    if expr.op == "&":
+        if expr.args[0].op == "|" and expr.args[1].op == "|":
+            if expr.args[1].args[0].op == "~" and expr.args[0].args[0] == expr.args[1].args[0].args[0]:
+                return expr.args[0].args[1] | expr.args[1].args[1]
 
-# ((p)->(q))^((r)->(s))
-# (p)v(r)
-# =>
-# (q)v(s)
-def constructiveDilemma(nodeA, nodeB):
-    if nodeA.data == "^":
-        if nodeA.children[0].data == "->" and nodeA.children[1].data == "->":
-            if nodeA.children[0].children[0] == nodeB.children[0] and nodeA.children[1].children[0] == nodeB.children[1]:
-                return Node("v", nodeA.children[0].children[1], nodeA.children[1].children[1])
+def constructiveDilemma(expr):
+    """
+    (((p)->(q))&((r)->(s)))&((p)|(r)) <=> (q)|(s)
+    """
+    if expr.op == "&":
+        if expr.args[0].op == "&":
+            if expr.args[0].args[0].op == "->" and expr.args[0].args[1].op == "->":
+                if expr.args[0].args[0].args[0] == expr.args[1].args[0] and expr.args[0].args[1].args[0] == expr.args[1].args[1]:
+                    return expr.args[0].args[0].args[1] | expr.args[0].args[1].args[1]
 
-# (p)->(q)
-# =>
-# (p)->((p)^(q))
-def absorption(node):
-    if node.data == "->":
-        return Node("->", node.children[0], Node("^", node.children[0], node.children[1]))
+def absorption(expr):
+    """
+    (p)->(q) <=> (p)->((p)&(q))
+    """
+    if expr.op == "->":
+        return expr.args[0] >> (expr.args[0] & expr.args[1])
