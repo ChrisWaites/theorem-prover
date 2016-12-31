@@ -38,15 +38,15 @@ def apply_equivalencies(fs, expr):
         equivalencies.update(apply_equivalency(f, expr))
     return equivalencies
 
-def get_neighboring_expressions(state):
+def get_neighboring_theorems(state):
     return apply_equivalencies(equivalency_functions, state)
 
-def find_theorem(axioms, theorem, heuristic=trivial_heuristic):
+def find_theorem(axioms, theorem, heuristic=trivial):
     """
     Given an iterable of axioms and a heuristic (optional),
     attempts to find a theorem or its negation using A* search.
     """
-    return a_star_search(Graph(get_neighboring_expressions), axioms, lambda x: (x == theorem) or (x == ~theorem), heuristic)
+    return a_star_search(Graph(get_neighboring_theorems), axioms, lambda x: (x == theorem) or (x == ~theorem), heuristic)
 
 if __name__ == "__main__":
     peanos_axioms = set([parse("Aa(~(((a)+(1))=(0)))"),

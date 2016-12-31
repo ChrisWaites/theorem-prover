@@ -20,10 +20,10 @@ class Graph:
         self.neighbors = (lambda x: neighbors[x]) if isinstance(neighbors, dict) else neighbors
         self.cost = (lambda x, y: cost[(x, y)]) if isinstance(cost, dict) else cost
 
-def trivial_heuristic(state):
+def trivial(state):
     return 0
 
-def a_star_search(graph, start_states, is_goal_state, heuristic=trivial_heuristic):
+def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
     """
     Terminates upon finding a state which satisfies the is_goal_state function, or exhausts all possible states.
 
@@ -52,11 +52,11 @@ def a_star_search(graph, start_states, is_goal_state, heuristic=trivial_heuristi
                 frontier.put((priority, neighbor))
                 came_from[neighbor] = current
 
-def recreate_path(goal, came_from_dict):
+def recreate_path(goal, came_from):
     path = []
     curr = goal
     while curr != None:
         path.append(curr)
-        curr = came_from_dict[curr]
+        curr = came_from[curr]
     path.reverse()
     return path

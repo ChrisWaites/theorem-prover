@@ -7,7 +7,7 @@ def conjunction(exprA, exprB):
     =>
     (p)&(q)
     """
-    return expr.args[0] & expr.args[1]
+    return exprA & exprB
 
 def modusPonens(expr):
     """
