@@ -88,6 +88,8 @@ def parse(expr):
     Takes in a string representation of an expression and returns and expression tree.
     Currently assumes a perfectly explicit expression, equivalent to repr(expr).
     Note that this entails perfectly explicit parenthesis.
+
+    expr -- A string expression to be parsed. e.g. ~(~((p)|(q)))
     """
     op = ""
     args = []

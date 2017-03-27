@@ -14,7 +14,7 @@ class Graph:
         - A dictionary that maps a 2-tuple to an associated cost
         - A function that takes in two states and returns an associated cost
 
-    Each of the above are converted into member functions.
+    If a dict is chosen for either of the above, it is wrapped behind a function.
     """
     def __init__(self, neighbors, cost=unweighted):
         self.neighbors = (lambda x: neighbors[x]) if isinstance(neighbors, dict) else neighbors
