@@ -1,16 +1,5 @@
-# godel-machine
+# Automated Theorem Prover
 
-Despite the fact that Mathematician Kurt Godel indirectly proved that computers could not successfully print every true statement of a formal system, I still want to try for non-paradoxical statements. The attempt to take on this challenge includes the creation of classes representing formal propositions, propositional functions, typographic equivalence methods, and a Set&lt;String> of the true conclusions.
+Despite the fact that Mathematician Kurt Godel in his incompleteness theorems proved that one could not systematically deduce every true statement within a formal system, I thought it would still be interesting to see the limits of what an automated system could practically deduce. The attempt to take on this challenge includes classes and functions able to replicate propositional logic, Peano's axioms of number theory, as well as rules of  logical equivalnce.
 
-For example, given the axioms `p` and `q^r`, the following is produced.
-```
-  q
-  ~~p
-  r
-  ~~<q^r>
-  <<q^r>^<q^r>>
-  <p^p>
-  <p^<q^r>>
-  <<q^r>^p>
-  ...
-```
+Given a set of axioms, the system uses A\* graph search to determine whether a given proposition or its negation is true within the system you specify, where a system is defined as a set of axioms and a set of logical equivalency functions. The goal is to potentially design a heuristic which could guarantee a certain level of performance in determining theorems relating to number theory.
