@@ -1,6 +1,9 @@
 from Queue import PriorityQueue
 
 def unweighted(state, neighbor):
+    """
+    The unweighted graph cost function.
+    """
     return 1
 
 class Graph:
@@ -8,10 +11,13 @@ class Graph:
     A Graph consists of a neighbor function and a cost function.
 
     neighbors --
+        Either...
         - A dictionary that maps a state to an iterable of neighbor states
         - A function that takes in a state and returns an iterable of neighbor states
     cost --
-        - A dictionary that maps a 2-tuple to an associated cost
+        Either...
+        - Unspecified (Default: unweighted cost function)
+        - A dictionary that maps a 2-tuple of states to an associated cost
         - A function that takes in two states and returns an associated cost
 
     If a dict is chosen for either of the above, it is wrapped behind a function.
@@ -21,6 +27,9 @@ class Graph:
         self.cost = (lambda x, y: cost[(x, y)]) if isinstance(cost, dict) else cost
 
 def trivial(state):
+    """
+    The trivial graph search heuristic.
+    """
     return 0
 
 def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
@@ -28,7 +37,7 @@ def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
     Terminates upon finding a state which satisfies the is_goal_state function, or exhausts all possible states.
 
     start_states -- An iterable of initial states.
-    is_goal_state -- A binary function which returns true is a given state is a goal state.
+    is_goal_state -- A binary function which returns true if a given state is a goal state.
     heuristic -- A function which takes in a state and returns an appropriate heuristic value that satisfies the requirements of the A* algorithm.
     
     Upon termination, returns a valid path from the start state to the goal.
