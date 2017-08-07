@@ -1,12 +1,12 @@
-import PropositionalLogic
-import NumberTheory
-import Inference
-from Expr import *
-from Search import *
+import propositional_logic
+import number_theory
+import inference
+from expression import *
+from search import *
 
-propositional_logic_equivalencies = [f for _, f in PropositionalLogic.__dict__.iteritems() if callable(f) and f != Expr]
-number_theory_equivalencies = [f for _, f in NumberTheory.__dict__.iteritems() if callable(f) and f != Expr]
-inference_equivalencies = [f for _, f in Inference.__dict__.iteritems() if callable(f) and f != Expr and f != Inference.conjunction]
+propositional_logic_equivalencies = [f for _, f in propositional_logic.__dict__.iteritems() if callable(f) and f != Expression]
+number_theory_equivalencies = [f for _, f in number_theory.__dict__.iteritems() if callable(f) and f != Expression]
+inference_equivalencies = [f for _, f in inference.__dict__.iteritems() if callable(f) and f != Expression and f != inference.conjunction]
 
 equivalency_functions = propositional_logic_equivalencies + number_theory_equivalencies + inference_equivalencies
 
@@ -28,8 +28,8 @@ def apply_equivalency(f, expr):
         for newArg in newIthArgs:
             newArgs = [arg for arg in expr.args]
             newArgs[i] = newArg
-            newExpr = Expr(expr.op, *newArgs)
-            equivalencies.add(newExpr)
+            newExpression = Expression(expr.op, *newArgs)
+            equivalencies.add(newExpression)
     return equivalencies
 
 def apply_equivalencies(fs, expr):

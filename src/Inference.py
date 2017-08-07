@@ -1,4 +1,4 @@
-from Expr import Expr
+from expression import Expression
 
 def conjunction(exprA, exprB):
     """ Note that conjunction is necessarily a meta-operation.
@@ -45,7 +45,7 @@ def disjunctiveSyllogism(expr):
 #     """
 #     p <=> (p)|(q)
 #     """
-#     return expr | Expr("q")
+#     return expr | Expression("q")
 
 def simplification(expr):
     """

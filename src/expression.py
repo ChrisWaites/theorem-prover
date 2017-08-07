@@ -1,16 +1,16 @@
-class Expr:
+class Expression:
     """
     Represents an expression tree.
 
     op -- Is either a constant, a unary operator, or a binary operator
-    args -- Is either 0, 1, or 2 Expression Trees, depending upon op
+    args -- Is either 0, 1, or 2 Expressionession Trees, depending upon op
     """
     def __init__(self, op, *args, **kwargs):
         self.op = op
         self.args = args
 
     def __call__(self, *args):
-        return Expr(self.op, *args)
+        return Expression(self.op, *args)
 
     def __repr__(self):
         if len(self.args) == 0:
@@ -23,65 +23,65 @@ class Expr:
     def __eq__(self, other):
         if other is self:
             return True
-        elif isinstance(other, Expr) and self.op == other.op:
+        elif isinstance(other, Expression) and self.op == other.op:
             return self.args == other.args
 
     def __hash__(self):
         return hash(self.op) ^ hash(self.args)
 
     def __lt__(self, other):
-        return Expr("<",  self, other)
+        return Expression("<",  self, other)
 
     def __le__(self, other):
-        return Expr("<=", self, other)
+        return Expression("<=", self, other)
 
     def __ge__(self, other):
-        return Expr(">=", self, other)
+        return Expression(">=", self, other)
 
     def __gt__(self, other):
-        return Expr(">",  self, other)
+        return Expression(">",  self, other)
 
     def __add__(self, other):
-        return Expr("+",  self, other)
+        return Expression("+",  self, other)
 
     def __sub__(self, other):
-        return Expr("-",  self, other)
+        return Expression("-",  self, other)
 
     def __and__(self, other):
-        return Expr("&",  self, other)
+        return Expression("&",  self, other)
 
     def __div__(self, other):
-        return Expr("/",  self, other)
+        return Expression("/",  self, other)
 
     def __truediv__(self, other):
-        return Expr("/",  self, other)
+        return Expression("/",  self, other)
 
     def __invert__(self):
-        return Expr("~",  self)
+        return Expression("~",  self)
 
     def __lshift__(self, other):
-        return Expr("<-", self, other)
+        return Expression("<-", self, other)
 
     def __rshift__(self, other):
-        return Expr("->", self, other)
+        return Expression("->", self, other)
 
     def __mul__(self, other):
-        return Expr("*",  self, other)
+        return Expression("*",  self, other)
 
     def __neg__(self):
-        return Expr("-",  self)
+        return Expression("-",  self)
 
     def __or__(self, other):
-        return Expr("|",  self, other)
+        return Expression("|",  self, other)
 
     def __pow__(self, other):
-        return Expr("**", self, other)
+        return Expression("**", self, other)
 
     def __xor__(self, other):
-        return Expr("^",  self, other)
+        return Expression("^",  self, other)
 
     def __mod__(self, other):
-        return Expr("<->",  self, other)
+        return Expression("<->",  self, other)
 
 def parse(expr):
     """
@@ -107,4 +107,4 @@ def parse(expr):
             op += expr[i]
     if op.isdigit():
         op = int(op)
-    return Expr(op, *args)
+    return Expression(op, *args)

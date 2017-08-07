@@ -1,4 +1,4 @@
-from Expr import Expr
+from expression import Expression
 
 def quantifierInterchange(expr):
     """
@@ -10,7 +10,7 @@ def quantifierInterchange(expr):
     if isinstance(expr.op, str):
         if expr.op[0] == "A" or expr.op[0] == "E":
             if expr.args[0].op[0] == "A" or expr.args[0].op[0] == "E":
-                return Expr(expr.args[0].op , Expr(expr.op, expr.args[0].args[0]))
+                return Expression(expr.args[0].op , Expression(expr.op, expr.args[0].args[0]))
 
 def quantifierNegation(expr):
     """
@@ -19,21 +19,21 @@ def quantifierNegation(expr):
     """
     if expr.op == "~":
         if expr.args[0].op[0] == "A":
-            return Expr("E" + expr.args[0].op[1:], ~expr.args[0].args[0])
+            return Expression("E" + expr.args[0].op[1:], ~expr.args[0].args[0])
         if expr.args[0].op[0] == "E":
-            return Expr("A" + expr.args[0].op[1:], ~expr.args[0].args[0])
+            return Expression("A" + expr.args[0].op[1:], ~expr.args[0].args[0])
     if isinstance(expr.op, str):
         if expr.op[0] == "A" and expr.args[0].op == "~":
-            return ~Expr("E" + expr.op[1:], expr.args[0].args[0])
+            return ~Expression("E" + expr.op[1:], expr.args[0].args[0])
         if expr.op[0] == "E" and expr.args[0].op == "~":
-            return ~Expr("E" + expr.op[1:], expr.args[0].args[0])
+            return ~Expression("E" + expr.op[1:], expr.args[0].args[0])
 
 def symmetryOfEquality(expr):
     """
     (x)=(y) <=> (y)=(x)
     """
     if expr.op == "=":
-        return Expr("=", expr.args[1], expr.args[0])
+        return Expression("=", expr.args[1], expr.args[0])
 
 def transitivityOfEquality(expr):
     """
@@ -42,14 +42,14 @@ def transitivityOfEquality(expr):
     if expr.op == "&":
         if expr.args[0].op == "=" and expr.args[1].op == "=":
             if expr.args[0].args[1] == expr.args[1].args[0]:
-                return Expr("=", expr.args[0].args[0], expr.args[1].args[1])
+                return Expression("=", expr.args[0].args[0], expr.args[1].args[1])
 
 def addition(expr):
     """
     (x)=(y) <=> ((x)+(1))=((y)+(1))
     """
     if expr.op == "=":
-        return Expr("=", expr.args[0] + Expr(1), expr.args[1] + Expr(1))
+        return Expression("=", expr.args[0] + Expression(1), expr.args[1] + Expression(1))
 
 def subtraction(expr):
     """
@@ -57,7 +57,7 @@ def subtraction(expr):
     """
     if expr.op == "=":
         if expr.args[0].op == "+" and expr.args[1].op == "+" and expr.args[0].args[1].op == 1 and expr.args[1].args[1].op == 1:
-            return Expr("=", expr.args[0].args[0], expr.args[1].args[0])
+            return Expression("=", expr.args[0].args[0], expr.args[1].args[0])
 
 def doubleNegationIntroduction(expr):
     """

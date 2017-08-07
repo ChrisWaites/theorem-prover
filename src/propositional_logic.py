@@ -1,4 +1,4 @@
-from Expr import Expr
+from expression import Expression
 
 def truth(expr):
     """
@@ -6,14 +6,14 @@ def truth(expr):
     F <=> ~(T)
     """
     if expr.op == "T":
-        return ~Expr("F")
+        return ~Expression("F")
     elif expr.op == "F":
-        return ~Expr("T")
+        return ~Expression("T")
     elif expr.op == "~":
         if expr.args[0].op == "T":
-            return Expr("F")
+            return Expression("F")
         elif expr.args[0].op == "F":
-            return Expr("T")
+            return Expression("T")
 
 def identity(expr):
     """
@@ -65,7 +65,7 @@ def commutative(expr):
     (p)<->(q) <=> (q)<->(p)
     """
     if expr.op == "|" or expr.op == "&" or expr.op == "<->":
-        return Expr(expr.op, expr.args[1], expr.args[0])
+        return Expression(expr.op, expr.args[1], expr.args[0])
 
 def associative(expr):
     """
@@ -74,7 +74,7 @@ def associative(expr):
     ((p)<->(q))<->(r) <=> (p)<->((q)<->(r))
     """
     if (expr.op == "&" or expr.op == "|" or expr.op == "<->") and expr.op == expr.args[0].op:
-        return Expr(expr.op, expr.args[0].args[0], Expr(expr.op, expr.args[0].args[1], expr.args[1]))
+        return Expression(expr.op, expr.args[0].args[0], Expression(expr.op, expr.args[0].args[1], expr.args[1]))
 
 def distributive(expr):
     """
@@ -125,10 +125,10 @@ def negation(expr):
     """
     if expr.op == "|":
         if expr.args[1].op == "~" and expr.args[0] == expr.args[1].args[0]:
-            return Expr("T")
+            return Expression("T")
     elif expr.op == "&":
         if expr.args[1].op == "~" and expr.args[0] == expr.args[1].args[0]:
-            return Expr("F")
+            return Expression("F")
 
 def materialImplication(expr):
     """
