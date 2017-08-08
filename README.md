@@ -31,7 +31,7 @@ edit-distance.
 ### Usage
 
 ```
-usage: prove [-h] [-a AXIOMS [AXIOMS ...]] [-t THEOREM]
+usage: run [-h] [-a AXIOMS [AXIOMS ...]] [-t THEOREM]
 
 Given a set of axioms attempts to prove or disprove a given theorem using
 propositional logic and number theory.
@@ -47,7 +47,7 @@ optional arguments:
 E.g.
 
 ```
-./prove -a Aa(~(((a)+(1))=(0))) Aa(((a)+(0))=(a)) -t ~(Ea((0)=((a)+(1))))
+./run -a Aa(~(((a)+(1))=(0))) Aa(((a)+(0))=(a)) -t ~(Ea((0)=((a)+(1))))
 ```
 
 ```
