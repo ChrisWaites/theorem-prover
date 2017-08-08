@@ -1,3 +1,4 @@
+from collections import defaultdict
 import propositional_logic
 import number_theory
 import inference
@@ -10,14 +11,25 @@ inference_equivalencies = [f for _, f in inference.__dict__.iteritems() if calla
 
 equivalency_functions = propositional_logic_equivalencies + number_theory_equivalencies + inference_equivalencies
 
+str_peanos_axioms = [
+    "Aa(~(((a)+(1))=(0)))",
+    "Aa(((a)+(0))=(a))",
+    "Aa(Ab(((a)+((b)+(1)))=(((a)+(b))+(1))))",
+    "Aa(((a)*(0))=(0))",
+    "Aa(Ab(((a)*((b)+(1)))=(((a)*(b))+(a))))"
+]
+
+peanos_axioms = set(map(parse, str_peanos_axioms))
+
+
 def apply_equivalency(f, expr):
     """
     Applies a given equivalency rule exactly once to every
     node in an expression tree recursively and returns a set
     of the new deductions
 
-    f -- An equivalency function
-    expr -- An expression tree
+    f (Callable) -- An equivalency function
+    expr (Expression) -- an expression tree
     """
     equivalencies = set()
     application = f(expr)
@@ -32,27 +44,47 @@ def apply_equivalency(f, expr):
             equivalencies.add(newExpression)
     return equivalencies
 
+
 def apply_equivalencies(fs, expr):
     equivalencies = set()
     for f in fs:
         equivalencies.update(apply_equivalency(f, expr))
     return equivalencies
 
-def get_neighboring_theorems(state):
+
+def neighboring_theorems(state):
     return apply_equivalencies(equivalency_functions, state)
+
+
+def edit_distance(a, b):
+    """
+    a -- Anything capable of being converted to a string via str(a)
+    b -- Anything capable of being converted to a string via str(b)
+    """
+    str_a, str_b = str(a), str(b)
+    cache = defaultdict(lambda: defaultdict(int)) # two dimensional default dict
+    for i in range(len(str_a) + 1):
+        for j in range(len(str_b) + 1):
+            if i == 0:
+                cache[i][j] = j
+            elif j == 0:
+                cache[i][j] = i
+            elif str_a[i-1] == str_b[j-1]:
+                cache[i][j] = cache[i-1][j-1]
+            else:
+                cache[i][j] = 1 + min(
+                    cache[i][j-1],
+                    cache[i-1][j],
+                    cache[i-1][j-1]
+                )
+    return cache[len(str_a)][len(str_b)]
+
+
 
 def find_theorem(axioms, theorem, heuristic=trivial):
     """
     Given an iterable of axioms and a heuristic (optional),
     attempts to find a theorem or its negation using A* search.
     """
-    return a_star_search(Graph(get_neighboring_theorems), axioms, lambda x: (x == theorem) or (x == ~theorem), heuristic)
+    return a_star(Graph(neighboring_theorems), axioms, lambda t: (t == theorem) or (t == ~theorem), heuristic)
 
-if __name__ == "__main__":
-    peanos_axioms = set([parse("Aa(~(((a)+(1))=(0)))"),
-                        parse("Aa(((a)+(0))=(a))"),
-                        parse("Aa(Ab(((a)+((b)+(1)))=(((a)+(b))+(1))))"),
-                        parse("Aa(((a)*(0))=(0))"),
-                        parse("Aa(Ab(((a)*((b)+(1)))=(((a)*(b))+(a))))")])
-
-    print find_theorem(peanos_axioms, ~~parse("Aa(~(((a)+(1))=(0)))"))

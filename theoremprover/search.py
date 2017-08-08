@@ -1,14 +1,13 @@
 from Queue import PriorityQueue
 
+
 def unweighted(state, neighbor):
-    """
-    The unweighted graph cost function.
-    """
+    """The unweighted graph cost function."""
     return 1
 
+
 class Graph:
-    """
-    A Graph consists of a neighbor function and a cost function.
+    """A Graph consists of a neighbor function and a cost function.
 
     neighbors --
         Either...
@@ -26,15 +25,14 @@ class Graph:
         self.neighbors = (lambda x: neighbors[x]) if isinstance(neighbors, dict) else neighbors
         self.cost = (lambda x, y: cost[(x, y)]) if isinstance(cost, dict) else cost
 
+
 def trivial(state):
-    """
-    The trivial graph search heuristic.
-    """
+    """The trivial graph search heuristic."""
     return 0
 
-def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
-    """
-    Terminates upon finding a state which satisfies the is_goal_state function, or exhausts all possible states and returns None.
+
+def a_star(graph, start_states, is_goal_state, heuristic=trivial):
+    """Terminates upon finding a state which satisfies the is_goal_state function, or exhausts all possible states and returns None.
 
     start_states -- An iterable of initial states.
     is_goal_state -- A binary function which returns true if a given state is a goal state.
@@ -52,7 +50,7 @@ def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
     while not frontier.empty():
         priority, current = frontier.get()
         if is_goal_state(current):
-            return recreate_path(current, came_from)
+            return _recreate_path(current, came_from)
         for neighbor in graph.neighbors(current):
             new_cost = cost_so_far[current] + graph.cost(current, neighbor)
             if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
@@ -61,7 +59,8 @@ def a_star_search(graph, start_states, is_goal_state, heuristic=trivial):
                 frontier.put((priority, neighbor))
                 came_from[neighbor] = current
 
-def recreate_path(goal, came_from):
+
+def _recreate_path(goal, came_from):
     path = []
     curr = goal
     while curr != None:
