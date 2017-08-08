@@ -57,3 +57,16 @@ Aa(~((0)=((a)+(1))))
 ->
 ~(Ea((0)=((a)+(1))))
 ```
+
+
+### To Do
+
+* More and more tests!
+
+* Add more heuristics, ideally with corresponding theoretical guarantees and performance
+  statistics.
+
+* Currently `expression.parse()` is quite rigid and assumes a strictly parenthesized
+  expression. Ideally it would work without parenthesization whenever no ambiguity exists,
+  or resolves ambiguity by some order of operation.
+
