@@ -1,5 +1,6 @@
 from expression import Expression
 
+
 def truth(expr):
     """
     T <=> ~(F)
@@ -15,6 +16,7 @@ def truth(expr):
         elif expr.args[0].op == "F":
             return Expression("T")
 
+
 def identity(expr):
     """
     (p)&(T) <=> p
@@ -24,6 +26,7 @@ def identity(expr):
         return expr.args[0]
     elif expr.op == "|" and expr.args[1].op == "F":
         return expr.args[0]
+
 
 def domination(expr):
     """
@@ -35,6 +38,7 @@ def domination(expr):
     elif expr.op == "&" and expr.args[1].op == "F":
         return expr.args[1]
 
+
 def idempotent(expr):
     """
     (p)|(p) <=> p
@@ -44,6 +48,7 @@ def idempotent(expr):
         if expr.args[0] == expr.args[1]:
             return expr.args[0]
 
+
 def doubleNegationIntroduction(expr):
     """
     p <=> ~(~(p))
@@ -51,12 +56,14 @@ def doubleNegationIntroduction(expr):
     if type(expr.op) == str and (expr.op in ("~", "&", "|", "->", "<->") or expr.op.isalpha()):
         return ~~expr
 
+
 def doubleNegationElimination(expr):
     """
     ~(~(p)) <=> p
     """
     if expr.op == "~" and expr.args[0].op == "~":
         return expr.args[0].args[0]
+
 
 def commutative(expr):
     """
@@ -67,6 +74,7 @@ def commutative(expr):
     if expr.op == "|" or expr.op == "&" or expr.op == "<->":
         return Expression(expr.op, expr.args[1], expr.args[0])
 
+
 def associative(expr):
     """
     ((p)&(q))&(r) <=> (p)&((q)&(r))
@@ -75,6 +83,7 @@ def associative(expr):
     """
     if (expr.op == "&" or expr.op == "|" or expr.op == "<->") and expr.op == expr.args[0].op:
         return Expression(expr.op, expr.args[0].args[0], Expression(expr.op, expr.args[0].args[1], expr.args[1]))
+
 
 def distributive(expr):
     """
@@ -91,6 +100,7 @@ def distributive(expr):
             return expr.args[0].args[0] & (expr.args[0].args[1] | expr.args[1].args[1])
         else:
             return (expr.args[0] | expr.args[1].args[0]) & (expr.args[0] | expr.args[1].args[1])
+
 
 def demorgans(expr):
     """
@@ -109,6 +119,7 @@ def demorgans(expr):
         if expr.args[0].op == "~" and expr.args[1].op == "~":
             return ~(expr.args[0].args[0] & expr.args[1].args[0])
 
+
 def absorption(expr):
     """
     (p)&((p)|(q)) <=> p
@@ -117,6 +128,7 @@ def absorption(expr):
     if (expr.op == "&" and expr.args[1].op == "|") or (expr.op == "|" and expr.args[1].op == "&"):
         if expr.args[0] == expr.args[1].args[0]:
             return expr.args[0]
+
 
 def negation(expr):
     """
@@ -130,6 +142,7 @@ def negation(expr):
         if expr.args[1].op == "~" and expr.args[0] == expr.args[1].args[0]:
             return Expression("F")
 
+
 def materialImplication(expr):
     """
     (p)->(q) <=> (~(p))|(q)
@@ -140,12 +153,14 @@ def materialImplication(expr):
     elif expr.op == "|":
         return ~expr.args[0] >> expr.args[1]
 
+
 def contraposition(expr):
     """
     (p)->(q) <=> (~(q))->(~(p))
     """
     if expr.op == "->":
         return ~expr.args[1] >> ~expr.args[0]
+
 
 def biconditional(expr):
     """
@@ -154,9 +169,11 @@ def biconditional(expr):
     if expr.op == "<->":
         return ~expr.args[0] % ~expr.args[1]
 
+
 def biconditionalElimination(expr):
     """
     (p)<->(q) <=> ((p)->(q))&((q)->(p))
     """
     if expr.op == "<->":
         return (expr.args[0] >> expr.args[1]) & (expr.args[1] >> expr.args[0])
+

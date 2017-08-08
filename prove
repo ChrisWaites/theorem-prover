@@ -4,6 +4,7 @@ import argparse
 from theoremprover.theorem_search import find_theorem, str_peanos_axioms
 from theoremprover.expression import parse
 
+
 def main(args):
     axioms = set(map(parse, args.axioms))
     theorem = parse(args.theorem)
@@ -11,9 +12,9 @@ def main(args):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Given a set of axioms attempts to prove or disprove a given theorem.')
-    parser.add_argument('-a', '--axioms', type=str, nargs='+', default=str_peanos_axioms, help='axioms of formal system (default: peano\'s axioms')
-    parser.add_argument('-t', '--theorem', type=str, default="~(Ea((0)=((a)+(1))))", help='theorem to be proved or disproved (default: ~(Ea((0)=((a)+(1))))')
+    parser = argparse.ArgumentParser(description='Given a set of axioms attempts to prove or disprove a given theorem using propositional logic and number theory.')
+    parser.add_argument('-a', '--axioms', type=str, nargs='+', default=str_peanos_axioms, help='axioms of formal system [default: peano\'s axioms]')
+    parser.add_argument('-t', '--theorem', type=str, default="~(Ea((0)=((a)+(1))))", help='theorem to be proved or disproved [default: ~(Ea((0)=((a)+(1))))]')
     return parser.parse_args()
 
 

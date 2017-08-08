@@ -1,5 +1,6 @@
 from expression import Expression
 
+
 def quantifierInterchange(expr):
     """
     Ax(Ay(p(x, y))) <=> Ay(Ax(p(x, y)))
@@ -11,6 +12,7 @@ def quantifierInterchange(expr):
         if expr.op[0] == "A" or expr.op[0] == "E":
             if expr.args[0].op[0] == "A" or expr.args[0].op[0] == "E":
                 return Expression(expr.args[0].op , Expression(expr.op, expr.args[0].args[0]))
+
 
 def quantifierNegation(expr):
     """
@@ -28,6 +30,7 @@ def quantifierNegation(expr):
         if expr.op[0] == "E" and expr.args[0].op == "~":
             return ~Expression("E" + expr.op[1:], expr.args[0].args[0])
 
+
 def symmetryOfEquality(expr):
     """
     (x)=(y) <=> (y)=(x)
@@ -44,12 +47,14 @@ def transitivityOfEquality(expr):
             if expr.args[0].args[1] == expr.args[1].args[0]:
                 return Expression("=", expr.args[0].args[0], expr.args[1].args[1])
 
+
 def addition(expr):
     """
     (x)=(y) <=> ((x)+(1))=((y)+(1))
     """
     if expr.op == "=":
         return Expression("=", expr.args[0] + Expression(1), expr.args[1] + Expression(1))
+
 
 def subtraction(expr):
     """
@@ -58,6 +63,7 @@ def subtraction(expr):
     if expr.op == "=":
         if expr.args[0].op == "+" and expr.args[1].op == "+" and expr.args[0].args[1].op == 1 and expr.args[1].args[1].op == 1:
             return Expression("=", expr.args[0].args[0], expr.args[1].args[0])
+
 
 def doubleNegationIntroduction(expr):
     """
@@ -68,3 +74,4 @@ def doubleNegationIntroduction(expr):
     if isinstance(expr.op, str):
         if expr.op == "=" or expr.op[0] == "A" or expr.op[0] == "E":
             return ~~expr
+

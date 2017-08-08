@@ -1,5 +1,6 @@
 from expression import Expression
 
+
 def conjunction(exprA, exprB):
     """ Note that conjunction is necessarily a meta-operation.
     p
@@ -9,6 +10,7 @@ def conjunction(exprA, exprB):
     """
     return exprA & exprB
 
+
 def modusPonens(expr):
     """
     (p)&((p)->(q)) <=> q
@@ -16,6 +18,7 @@ def modusPonens(expr):
     if expr.op == "&":
         if expr.args[1].op == "->" and expr.args[0] == expr.args[1].args[0]:
             return expr.args[1].args[1]
+
 
 def modusTollens(expr):
     """
@@ -25,6 +28,7 @@ def modusTollens(expr):
         if expr.args[0].op == "~" and expr.args[1].op == "->" and expr.args[0].args[0] == expr.args[1].args[1]:
             return ~expr.args[1].args[0]
 
+
 def hypotheticalSyllogism(expr):
     """
     ((p)->(q))&((q)->(r)) <=> (p)->(r)
@@ -32,6 +36,7 @@ def hypotheticalSyllogism(expr):
     if expr.op == "&":
         if expr.args[0].op == "->" and expr.args[1].op == "->" and expr.args[0].args[1] == expr.args[1].args[0]:
             return expr.args[0].args[0] >> expr.args[1].args[1]
+
 
 def disjunctiveSyllogism(expr):
     """
@@ -41,11 +46,13 @@ def disjunctiveSyllogism(expr):
         if expr.args[0].op == "|" and expr.args[1].op == "~" and expr.args[0].args[0] == expr.args[1].args[0]:
             return expr.args[0].args[1]
 
+
 # def addition(expr):
 #     """
 #     p <=> (p)|(q)
 #     """
 #     return expr | Expression("q")
+
 
 def simplification(expr):
     """
@@ -53,6 +60,7 @@ def simplification(expr):
     """
     if expr.op == "&":
         return expr.args[0]
+
 
 def resolution(expr):
     """
@@ -62,6 +70,7 @@ def resolution(expr):
         if expr.args[0].op == "|" and expr.args[1].op == "|":
             if expr.args[1].args[0].op == "~" and expr.args[0].args[0] == expr.args[1].args[0].args[0]:
                 return expr.args[0].args[1] | expr.args[1].args[1]
+
 
 def constructiveDilemma(expr):
     """
@@ -73,9 +82,11 @@ def constructiveDilemma(expr):
                 if expr.args[0].args[0].args[0] == expr.args[1].args[0] and expr.args[0].args[1].args[0] == expr.args[1].args[1]:
                     return expr.args[0].args[0].args[1] | expr.args[0].args[1].args[1]
 
+
 def absorption(expr):
     """
     (p)->(q) <=> (p)->((p)&(q))
     """
     if expr.op == "->":
         return expr.args[0] >> (expr.args[0] & expr.args[1])
+
