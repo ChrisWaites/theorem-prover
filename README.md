@@ -1,5 +1,7 @@
 ## Automated Theorem Prover
 
+![alt text](http://imgur.com/a/Wu82Y)
+
 
 ### Motivation
 
