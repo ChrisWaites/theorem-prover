@@ -42,3 +42,9 @@ optional arguments:
   -t THEOREM, --theorem THEOREM
                         theorem to be proved or disproved [default: ~(Ea((0)=((a)+(1))))]
 ```
+
+E.g.
+
+```
+./prove -a Aa(~(((a)+(1))=(0))) Aa(((a)+(0))=(a)) -t ~(Ea((0)=((a)+(1))))
+```
