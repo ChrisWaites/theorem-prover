@@ -1,6 +1,6 @@
 ## Automated Theorem Prover
 
-![](http://i.imgur.com/BgZ4BYv.png =200x)
+<img src="http://i.imgur.com/BgZ4BYv.png" width="200">
 
 
 ### Motivation
