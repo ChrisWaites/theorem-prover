@@ -81,10 +81,12 @@ def edit_distance(a, b):
 
 
 
-def find_theorem(axioms, theorem, heuristic=trivial):
+def find_theorem(axioms, theorem, heuristic=None):
     """
     Given an iterable of axioms and a heuristic (optional),
     attempts to find a theorem or its negation using A* search.
     """
+    if heuristic == None:
+        heuristic = lambda t: edit_distance(t, theorem)
     return a_star(Graph(neighboring_theorems), axioms, lambda t: (t == theorem) or (t == ~theorem), heuristic)
 

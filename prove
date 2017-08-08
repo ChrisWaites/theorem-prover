@@ -8,7 +8,11 @@ from theoremprover.expression import parse
 def main(args):
     axioms = set(map(parse, args.axioms))
     theorem = parse(args.theorem)
-    print(find_theorem(axioms, theorem))
+    path = find_theorem(axioms, theorem)
+    print(path[0])
+    for t in path[1:]:
+        print("->")
+        print(t)
 
 
 def parse_args():
