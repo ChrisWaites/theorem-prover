@@ -1,20 +1,21 @@
 ## Automated Theorem Prover
 
 
-#### Motivation
+### Motivation
 
 Many would agree that Kurt G÷del's [incompleteness theorems](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems)
 set some of the most unintuitive and limiting retrictions upon our ability to
 understand nontrivial formal systems like number theory or graph theory.
-Essentially, the ideal of ever constructing an automated system which is
-capable of finding only and all true theorems is fundamentally impossible.
+To be brief, it states that the ideal of ever constructing an automated system which is
+fully capable of finding only and all true theorems given a finite set of axioms is
+fundamentally impossible.
 
-Despite this, many devote a great deal of effort into practical systems which
-do as well as possible for more conventional mathematical theorems, as is this
-project.
+Despite this, many attempt to develop systems capable of proving
+more conventional mathematical theorems rather than paradoxical ones. This is such an
+attempt.
 
 
-#### Approach
+### Approach
 
 The idea is to encode the mathematical process as an unambiguous procedure
 which can computationally executed. That is, we define a formal mathematical system to be
@@ -26,7 +27,7 @@ provide practical efficiency through means of guiding heuristics such as
 edit-distance.
 
 
-#### Usage
+### Usage
 
 ```
 usage: prove [-h] [-a AXIOMS [AXIOMS ...]] [-t THEOREM]
