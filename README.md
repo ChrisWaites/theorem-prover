@@ -26,8 +26,7 @@ a graph in which true theorems are vertices, laws of deduction are edges,
 and a proof is essentially a search problem.  
 
 Although from a theoretical perspective this is sufficient, the goal is to also
-provide practical efficiency through means of guiding heuristics such as
-edit-distance.
+provide practical efficiency through various guiding heuristics.
 
 
 ### Usage
