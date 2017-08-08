@@ -41,7 +41,7 @@ optional arguments:
                         theorem to be proved or disproved [default: ~(Ea((0)=((a)+(1))))]
 ```
 
-E.g.
+For example,
 
 ```
 ./run -a "Aa(~(((a)+(1))=(0)))" "Aa(((a)+(0))=(a))" -t "~(Ea((0)=((a)+(1))))"
