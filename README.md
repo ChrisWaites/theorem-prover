@@ -3,9 +3,10 @@
 
 ### Motivation
 
-Many would agree that Kurt G÷del's [incompleteness theorems](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems)
+Many would agree that [Kurt Godel's incompleteness theorems](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems)
 set some of the most unintuitive and limiting retrictions upon our ability to
 understand nontrivial formal systems like number theory or graph theory.
+
 To be brief, it states that the ideal of ever constructing an automated system which is
 fully capable of finding only and all true theorems given a finite set of axioms is
 fundamentally impossible.
