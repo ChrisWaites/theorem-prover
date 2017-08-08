@@ -19,9 +19,8 @@ attempt.
 
 ### Approach
 
-| | |
+| The idea is to encode the mathematical process as an unambiguous procedure which can computationally executed. That is, we define a formal mathematical system to be a graph in which true theorems are vertices, laws of deduction are edges, and a proof is essentially a search problem.<br><br>Although from a theoretical perspective this is sufficient, the goal is to also provide practical efficiency through various guiding heuristics. | <img src="http://i.imgur.com/BgZ4BYv.png" width="280px"> |
 |:--|--:|
-| The idea is to encode the mathematical process as an unambiguous procedure which can computationally executed. That is, we define a formal mathematical system to be a graph in which true theorems are vertices, laws of deduction are edges, and a proof is essentially a search problem.<br>Although from a theoretical perspective this is sufficient, the goal is to also provide practical efficiency through various guiding heuristics. | <img src="http://i.imgur.com/BgZ4BYv.png" width="280px"> |
 
 
 ### Usage
