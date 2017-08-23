@@ -41,7 +41,21 @@ optional arguments:
                         theorem to be proved or disproved [default: ~(Ea((0)=((a)+(1))))]
 ```
 
-For example,
+For example, say you had a number theoretic system which characterized the
+nonnegative integers with the following two axioms.
+
+* For all `a`, it is not the case that `a + 1 = 0`.
+  * `Aa(~(((a)+(1))=(0)))`
+* For all `a`, `a + 0 = a`.
+  * `Aa(((a)+(0))=(a))`
+
+...and you wanted to know whether the following theorem was true.
+
+* It is not the case that there exists an `a` such that `0 = a + 1`.
+  * `~(Ea((0)=((a)+(1))))`
+
+Then you could run the following command to see a sequence of deductions which
+lead to the desired theorem, or rather its negation.
 
 ```
 ./run -a "Aa(~(((a)+(1))=(0)))" "Aa(((a)+(0))=(a))" -t "~(Ea((0)=((a)+(1))))"
@@ -52,6 +66,10 @@ Aa(~((0)=((a)+(1))))
 ->
 ~(Ea((0)=((a)+(1))))
 ```
+
+If you would rather use the default set of Peano's Axioms of Number Theory,
+simply leave the axiom flag unspecified.
+
 ```
 ./run -t "Aa(((0)+(1))=(((a)*(0))+(1)))"
 
@@ -61,6 +79,9 @@ Aa((((a)*(0))+(1))=((0)+(1)))
 ->
 Aa(((0)+(1))=(((a)*(0))+(1)))
 ```
+
+To test the entire repository, simply execute the following in the root.
+
 ```
 ./test
 
