@@ -32,10 +32,10 @@ def trivial(state):
 
 
 def a_star(graph, start_states, is_goal_state, heuristic=trivial):
-    """Terminates upon finding a state which satisfies the is_goal_state function, or exhausts all possible states and returns None.
+    """Terminates upon finding a state whichh satisfies the is_goal_state function, or exhausts all possible states and returns None.
 
     start_states -- An iterable of initial states.
-    is_goal_state -- A binary function which returns true if a given state is a goal state.
+    is_goal_state -- A binary function which returs true if a given state is a goal state.
     heuristic -- A function which takes in a state and returns an appropriate heuristic value that satisfies the requirements of the A* algorithm.
     
     Upon termination, returns a valid path from the start state to the goal.
