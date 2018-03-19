@@ -8,4 +8,8 @@ class TestExpression(unittest.TestCase):
         self.assertTrue(
             parse("T") == Expression("T")
         )
+        
+        self.assertTrue(
+            parse("Aa(~(((a)+(1))=(0)))") == Expression('Aa', ~(Expression('=', Expression('a')+Expression(1), Expression(0))))
+        )
 
