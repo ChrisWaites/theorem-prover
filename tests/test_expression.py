@@ -5,11 +5,19 @@ from theoremprover.expression import Expression, parse
 class TestExpression(unittest.TestCase):
 
     def test_parse(self):
-        self.assertTrue(
-            parse("T") == Expression("T")
+        self.assertEqual(
+            parse("T"),
+            Expression("T")
         )
         
-        self.assertTrue(
-            parse("Aa(~(((a)+(1))=(0)))") == Expression('Aa', ~(Expression('=', Expression('a')+Expression(1), Expression(0))))
+        self.assertEqual(
+            parse("Aa(~(((a)+(1))=(0)))"),
+            Expression('Aa', ~(Expression('=', Expression('a')+Expression(1), Expression(0))))
+        )
+
+    def test_ops(self):
+        self.assertEqual(
+            Expression('^', Expression('a'), Expression('b')),
+            Expression('a') ^ Expression('b')
         )
 
