@@ -97,5 +97,4 @@ To test the entire repository, simply execute the following in the root.
 
 * Currently `expression.parse()` is quite rigid and assumes a strictly parenthesized
   expression. Ideally it would work without parenthesization whenever no ambiguity exists,
-  or resolves ambiguity by some order of operation.
-
+  or resolves ambiguity by some order of operation. Resource [here](https://en.wikipedia.org/wiki/Shunting-yard_algorithm).
