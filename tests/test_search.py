@@ -2,7 +2,7 @@ import unittest
 from theoremprover.search import *
 
 
-class TestExpression(unittest.TestCase):
+class TestSearch(unittest.TestCase):
 
     def test_astar(self):
         neighbors = {

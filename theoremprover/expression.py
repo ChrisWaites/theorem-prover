@@ -7,6 +7,9 @@ class Expression:
     """
 
     def __init__(self, op, *args, **kwargs):
+        if op == None or not (type(op) == str or type(op) == int) or op == "":
+            raise ValueError("Invalid op: {}".format(op))
+
         self.op = op
         self.args = args
 
@@ -118,6 +121,9 @@ def parse(expr):
 
     expr -- A string expression to be parsed. e.g. ~(~((p)|(q)))
     """
+    if expr == None or type(expr) != str or expr == "":
+        raise ValueError("Invalid expr: {}".format(expr))
+
     op = ""
     args = []
     openParendCount = 0
