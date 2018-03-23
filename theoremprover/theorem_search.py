@@ -5,22 +5,19 @@ import inference
 from expression import *
 from search import *
 
-propositional_logic_equivalencies = [f for _, f in propositional_logic.__dict__.iteritems() if callable(f) and f != Expression]
-number_theory_equivalencies = [f for _, f in number_theory.__dict__.iteritems() if callable(f) and f != Expression]
-inference_equivalencies = [f for _, f in inference.__dict__.iteritems() if callable(f) and f != Expression and f != inference.conjunction]
+def get_fns(module):
+    return [f for _, f in module.__dict__.iteritems() if callable(f) and f != Expression]
 
-equivalency_functions = propositional_logic_equivalencies + number_theory_equivalencies + inference_equivalencies
+equivalency_functions = get_fns(propositional_logic) + get_fns(number_theory) + get_fns(inference)
+equivalency_functions.remove(inference.conjunction)
 
-str_peanos_axioms = [
+peanos_axioms = set(map(parse, [
     "Aa(~(((a)+(1))=(0)))",
     "Aa(((a)+(0))=(a))",
     "Aa(Ab(((a)+((b)+(1)))=(((a)+(b))+(1))))",
     "Aa(((a)*(0))=(0))",
     "Aa(Ab(((a)*((b)+(1)))=(((a)*(b))+(a))))"
-]
-
-peanos_axioms = set(map(parse, str_peanos_axioms))
-
+]))
 
 def apply_equivalency(f, expr):
     """
@@ -81,7 +78,7 @@ def edit_distance(a, b):
 
 
 
-def find_theorem(axioms, theorem, heuristic=None):
+def find_theorem(theorem, axioms=peanos_axioms, heuristic=None):
     """
     Given an iterable of axioms and a heuristic (optional),
     attempts to find a theorem or its negation using A* search.
