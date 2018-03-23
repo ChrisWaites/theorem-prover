@@ -38,18 +38,21 @@ class TestExpression(unittest.TestCase):
         # Typical case
         self.assertEqual(
             parse("Aa(~(((a)+(1))=(0)))"),
-            Expression('Aa', ~(Expression('=', Expression('a')+Expression(1), Expression(0))))
+            Expression('Aa', ~(Expression('=', Expression('a') + Expression(1), Expression(0))))
         )
 
 
     def test_ops(self):
+        # unary
         self.assertEqual(
-            Expression('^', Expression('a'), Expression('b')),
-            Expression('a') ^ Expression('b')
+            ~Expression('p'),
+            Expression('~', Expression('p'))
         )
 
+        # binary
         self.assertEqual(
-            Expression('|', Expression('p'), Expression('q')),
-            Expression('p') | Expression('q')
+            Expression('p') ^ Expression('q'),
+            Expression('^', Expression('p'), Expression('q'))
         )
+
 
