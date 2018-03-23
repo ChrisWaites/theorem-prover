@@ -5,10 +5,11 @@ import inference
 from expression import *
 from search import *
 
-def get_fns(module):
+
+def _get_fns(module):
     return [f for _, f in module.__dict__.iteritems() if callable(f) and f != Expression]
 
-equivalency_functions = get_fns(propositional_logic) + get_fns(number_theory) + get_fns(inference)
+equivalency_functions = _get_fns(propositional_logic) + _get_fns(number_theory) + _get_fns(inference)
 equivalency_functions.remove(inference.conjunction)
 
 peanos_axioms = set(map(parse, [
@@ -18,6 +19,7 @@ peanos_axioms = set(map(parse, [
     "Aa(((a)*(0))=(0))",
     "Aa(Ab(((a)*((b)+(1)))=(((a)*(b))+(a))))"
 ]))
+
 
 def apply_equivalency(f, expr):
     """
@@ -75,7 +77,6 @@ def edit_distance(a, b):
                     cache[i-1][j-1]
                 )
     return cache[len(str_a)][len(str_b)]
-
 
 
 def find_theorem(theorem, axioms=peanos_axioms, heuristic=None):
